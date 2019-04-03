@@ -8,17 +8,32 @@ n = int(input("Unesite duzinu magicne sekvence: "))
 problem = constraint.Problem()
 
 
-problem.addVariables(range(0, n), range(0, n))
+def ispisi(resenje, n):
+    print ('(', end = '')
+    i = 0
+    for v in resenje.values():
+        i += 1
+        if i == n:
+            print (v, end = '')
+        else:
+            print (v, end = ',')
+    print (')')
+        
 
 
-def ogranicenje(i, lista):
-    br_poj = 0
-    for x in lista:
-        if i == x:
-            br_poj += 1
-    return i == br_poj
+def dodatni_test(resenje):
+    for i in range(n):
+        if resenje[i] != list(resenje.values()).count(i):
+            return False
+    return True
 
-for i in range(0, n):
-    problem.addConstraint(ogranicenje, [i, range(0, n)])
+problem.addVariables(range(n), range(n))
 
-print (problem.getSolution())
+problem.addConstraint(constraint.ExactSumConstraint(n))
+
+
+for r in problem.getSolutions():
+    if dodatni_test(r):
+        ispisi(r, n)
+
+
