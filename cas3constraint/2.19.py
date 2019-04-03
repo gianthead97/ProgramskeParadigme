@@ -19,6 +19,6 @@ def ogranicenje(i, lista):
     return i == br_poj
 
 for i in range(0, n):
-    problem.addConstraint(ogranicenje, [i, [x for x in range(0, n)]])
+    problem.addConstraint(ogranicenje, [i, range(0, n)])
 
 print (problem.getSolution())
